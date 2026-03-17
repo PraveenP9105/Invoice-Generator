@@ -46,19 +46,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FEFBE8ABC9494C29BD95B10B4962EE7E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_397EF25B85514D27B3E95A892DEBBB2C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B6A28A744AF54473AD182686B7ED25DE }}
-
+    
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'invoice-backend-07'
           slot-name: 'Production'
           package: '*.jar'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           
